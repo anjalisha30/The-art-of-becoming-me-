@@ -1,0 +1,337 @@
+```css
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #11101d;
+    color: #f7efff;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.universe {
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 35%, #302344 0%, transparent 55%),
+        #11101d;
+    min-height: 100vh;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 8%;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #c5b8d5;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    letter-spacing: 0;
+    color: #f7efff;
+    text-decoration: none;
+}
+
+.hero {
+    min-height: 690px;
+    padding: 55px 20px 35px;
+    text-align: center;
+    position: relative;
+}
+
+.eyebrow {
+    color: #d9b9ee;
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 7vw, 85px);
+    font-weight: 400;
+    line-height: 1.1;
+    position: relative;
+    z-index: 2;
+}
+
+h1 span {
+    color: #d7b3e9;
+    font-style: italic;
+}
+
+.description {
+    max-width: 440px;
+    margin: 24px auto;
+    color: #b8aec7;
+    font-size: 14px;
+    line-height: 1.9;
+    position: relative;
+    z-index: 2;
+}
+
+button {
+    background: #e4c8f0;
+    color: #24172d;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #fff0ff;
+    transform: translateY(-3px);
+}
+
+.planet-container {
+    height: 340px;
+    max-width: 450px;
+    margin: 0 auto;
+    position: relative;
+    perspective: 900px;
+}
+
+.planet {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(circle at 30% 25%,
+        #fff0ff 0%,
+        #dfb8e8 10%,
+        #aa83c8 35%,
+        #614879 65%,
+        #29213f 100%);
+
+    box-shadow:
+        inset -20px -15px 35px #15101f,
+        0 0 45px #c99de755;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+
+    animation: float 5s ease-in-out infinite;
+    cursor: pointer;
+    transition: box-shadow 0.4s;
+}
+
+.planet span {
+    color: #fff4ff;
+    text-shadow: 0 0 15px #ffffff99;
+}
+
+.planet:hover {
+    box-shadow:
+        inset -20px -15px 35px #15101f,
+        0 0 75px #d7a9ff99;
+}
+
+.orbit {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 260px;
+    height: 100px;
+    border: 1px solid #d6b1e777;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+}
+
+.orbit-two {
+    width: 300px;
+    height: 130px;
+    transform: translate(-50%, -50%) rotate(35deg);
+    border-color: #b79bd544;
+}
+
+.star {
+    position: absolute;
+    color: #f4dcff;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-one {
+    top: 15%;
+    left: 25%;
+    font-size: 25px;
+}
+
+.star-two {
+    top: 35%;
+    right: 15%;
+    font-size: 35px;
+}
+
+.star-three {
+    bottom: 20%;
+    left: 17%;
+    font-size: 18px;
+}
+
+.star-four {
+    bottom: 25%;
+    right: 25%;
+    font-size: 22px;
+}
+
+.floating-note {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #d9c5e8;
+    font-size: 13px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.note-one {
+    top: 24%;
+    left: 0;
+}
+
+.note-two {
+    bottom: 22%;
+    right: 0;
+    animation-delay: 1s;
+}
+
+.bottom-note {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #a99bb8;
+    font-size: 13px;
+    margin-top: -5px;
+}
+
+.thoughts {
+    padding: 100px 20px;
+    text-align: center;
+    background: #171322;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 400;
+    margin: 0 auto 45px;
+    max-width: 600px;
+}
+
+.quote-card {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 35px 25px;
+    border: 1px solid #554365;
+    border-radius: 20px;
+    background: #211a30;
+}
+
+.quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 55px;
+    color: #d7b3e9;
+}
+
+.quote-card p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1.7;
+    margin: 10px 0 28px;
+    color: #e9dff1;
+}
+
+footer {
+    padding: 35px 20px;
+    text-align: center;
+    color: #a99bb8;
+    font-size: 12px;
+}
+
+@keyframes float {
+    0%, 100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -12px;
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.4;
+        scale: 0.9;
+    }
+
+    50% {
+        opacity: 1;
+        scale: 1.15;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 22px 6%;
+        letter-spacing: 1px;
+    }
+
+    .navbar span {
+        font-size: 8px;
+    }
+
+    .hero {
+        padding-top: 45px;
+    }
+
+    .planet-container {
+        max-width: 340px;
+    }
+
+    .planet {
+        width: 135px;
+        height: 135px;
+    }
+
+    .orbit {
+        width: 220px;
+    }
+
+    .orbit-two {
+        width: 250px;
+    }
+
+    .floating-note {
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+```
