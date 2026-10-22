@@ -120,6 +120,20 @@ const atmosphere = new THREE.Mesh(
 
 scene.add(atmosphere);
 
+// Outer lavender glow
+const outerGlow = new THREE.Mesh(
+    new THREE.SphereGeometry(1.16, 64, 64),
+    new THREE.MeshBasicMaterial({
+        color: "#a855f7",
+        transparent: true,
+        opacity: 0.055,
+        side: THREE.BackSide,
+        depthWrite: false
+    })
+);
+
+scene.add(outerGlow);
+
 // ==========================================
 // 4. LIGHTING
 // ==========================================
@@ -183,6 +197,34 @@ const starMaterial = new THREE.PointsMaterial({
 
 const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
+
+// 🌌 Dreamy purple nebula clouds
+const nebulaGroup = new THREE.Group();
+
+function createNebula(x, y, z, scale, color, opacity) {
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+
+    const material = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: opacity,
+        depthWrite: false
+    });
+
+    const cloud = new THREE.Mesh(geometry, material);
+
+    cloud.position.set(x, y, z);
+    cloud.scale.set(scale * 1.5, scale, scale * 0.35);
+
+    nebulaGroup.add(cloud);
+}
+
+createNebula(-2.5, 1.2, -4, 1.4, "#8b5cf6", 0.10);
+createNebula(2.4, -0.8, -5, 1.7, "#d946ef", 0.07);
+createNebula(0.2, 2.0, -6, 1.5, "#6366f1", 0.06);
+createNebula(-1.8, -1.5, -5, 1.2, "#c084fc", 0.06);
+
+scene.add(nebulaGroup);
 
 // ==========================================
 // 7. CREATE ORBITAL RINGS
@@ -270,6 +312,14 @@ function animate() {
     requestAnimationFrame(animate);
 
     const elapsed = clock.getElapsedTime();
+
+    // ✨ Gentle twinkling stars
+starMaterial.opacity = 0.65 + Math.sin(elapsed * 2) * 0.2;
+
+// Make a few stars sparkle slightly brighter
+starMaterial.size = 0.035 + Math.sin(elapsed * 3) * 0.008;
+
+nebulaGroup.rotation.y = Math.sin(elapsed * 0.08) * 0.04;
 
     // Rotate the main planet
     planet.rotation.y = elapsed * 0.18;
