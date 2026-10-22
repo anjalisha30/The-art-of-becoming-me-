@@ -51,6 +51,58 @@ const planet = new THREE.Mesh(
 
 scene.add(planet);
 
+// Make the planet clickable
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+const messagePanel = document.getElementById("planet-message");
+const messageTitle = document.getElementById("message-title");
+const messageText = document.getElementById("message-text");
+
+const planetThoughts = [
+    {
+        title: "Learning to Love Myself",
+        text: "I am learning to become someone I love without hating the person I am today."
+    },
+    {
+        title: "The Person I'm Becoming",
+        text: "I am allowed to be a work in progress and still be proud of how far I've come."
+    },
+    {
+        title: "A Little Reminder",
+        text: "I don't have to have my entire life figured out to deserve a little peace."
+    }
+];
+
+let currentThought = 0;
+
+renderer.domElement.addEventListener("click", (event) => {
+    const rect = renderer.domElement.getBoundingClientRect();
+
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const hits = raycaster.intersectObject(planet);
+
+    if (hits.length > 0) {
+        const thought = planetThoughts[currentThought];
+
+        messageTitle.textContent = thought.title;
+        messageText.textContent = thought.text;
+
+        messagePanel.classList.add("visible");
+
+        currentThought = (currentThought + 1) % planetThoughts.length;
+    }
+});
+
+// Close the message panel
+document.getElementById("close-message").addEventListener("click", () => {
+    messagePanel.classList.remove("visible");
+});
+
 // ==========================================
 // 3. ADD A GLOWING ATMOSPHERE
 // ==========================================
