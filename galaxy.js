@@ -51,9 +51,51 @@ const planet = new THREE.Mesh(
 
 scene.add(planet);
 
+// 💜 Planet of Dreams
+const dreamPlanet = new THREE.Mesh(
+    new THREE.SphereGeometry(0.32, 48, 48),
+    new THREE.MeshStandardMaterial({
+        color: "#f3a6e8",
+        roughness: 0.7,
+        emissive: "#63245f",
+        emissiveIntensity: 0.35
+    })
+);
+
+dreamPlanet.position.set(-2.0, 0.8, 0);
+scene.add(dreamPlanet);
+
+
+// 🌙 Planet of Poetry
+const poetryPlanet = new THREE.Mesh(
+    new THREE.SphereGeometry(0.24, 48, 48),
+    new THREE.MeshStandardMaterial({
+        color: "#a9c5ff",
+        roughness: 0.75,
+        emissive: "#293e83",
+        emissiveIntensity: 0.3
+    })
+);
+
+poetryPlanet.position.set(2.0, -0.65, 0);
+scene.add(poetryPlanet);
+
 // Make the planet clickable
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+
+// ✨ Objects that respond to the mouse
+const clickablePlanets = [
+    planet,
+    dreamPlanet,
+    poetryPlanet
+];
+
+const originalPlanetScales = new Map();
+
+clickablePlanets.forEach((p) => {
+    originalPlanetScales.set(p, p.scale.clone());
+});
 
 const messagePanel = document.getElementById("planet-message");
 const messageTitle = document.getElementById("message-title");
@@ -76,6 +118,36 @@ const planetThoughts = [
 
 let currentThought = 0;
 
+// 💜 Give each planet its own story
+const planetStories = new Map([
+    [
+        planet,
+        {
+            title: "The Art of Becoming Me",
+            label: "MY JOURNEY ✧",
+            text: "I am still discovering who I am. Somewhere between who I used to be and who I want to become, I am learning to appreciate the person I am today."
+        }
+    ],
+    [
+        dreamPlanet,
+        {
+            title: "A Girl Full of Dreams",
+            label: "MY LITTLE UNIVERSE ✧",
+            text: "There are so many things I want to do, places I want to see, and versions of myself I want to meet. I hope I never lose the courage to try."
+        }
+    ],
+    [
+        poetryPlanet,
+        {
+            title: "Things I Never Said",
+            label: "LETTERS FROM MY HEART ✧",
+            text: "Some feelings never find their way into conversations. They become poems, unsent letters, and little pieces of ourselves that we leave behind in words."
+        }
+    ]
+]);
+
+
+
 renderer.domElement.addEventListener("click", (event) => {
     const rect = renderer.domElement.getBoundingClientRect();
 
@@ -84,18 +156,40 @@ renderer.domElement.addEventListener("click", (event) => {
 
     raycaster.setFromCamera(pointer, camera);
 
-    const hits = raycaster.intersectObject(planet);
+    const clickablePlanets = [
+        planet,
+        dreamPlanet,
+        poetryPlanet
+    ];
 
-    if (hits.length > 0) {
-        const thought = planetThoughts[currentThought];
+    const hits = raycaster.intersectObjects(clickablePlanets);
 
-        messageTitle.textContent = thought.title;
-        messageText.textContent = thought.text;
+    if (hits.length === 0) return;
 
-        messagePanel.classList.add("visible");
+    const selectedPlanet = hits[0].object;
+    const story = planetStories.get(selectedPlanet);
 
-        currentThought = (currentThought + 1) % planetThoughts.length;
+    if (!story) return;
+
+    const messagePanel = document.getElementById("planet-message");
+    const messageTitle = document.getElementById("message-title");
+    const messageText = document.getElementById("message-text");
+
+    if (!messagePanel || !messageTitle || !messageText) {
+        console.error("Planet message panel elements were not found.");
+        return;
     }
+
+    messageTitle.textContent = story.title;
+    messageText.textContent = story.text;
+
+    const messageLabel = messagePanel.querySelector(".message-label");
+
+    if (messageLabel) {
+        messageLabel.textContent = story.label;
+    }
+
+    messagePanel.classList.add("visible");
 });
 
 // Close the message panel
@@ -170,7 +264,11 @@ scene.add(moon);
 // 6. CREATE STARS
 // ==========================================
 
+// ✨ Create stars with individual twinkle speeds
+
 const starPositions = [];
+const starPhases = [];
+const starSpeeds = [];
 
 for (let i = 0; i < 1800; i++) {
     starPositions.push(
@@ -178,6 +276,9 @@ for (let i = 0; i < 1800; i++) {
         (Math.random() - 0.5) * 35,
         (Math.random() - 0.5) * 35
     );
+
+    starPhases.push(Math.random() * Math.PI * 2);
+    starSpeeds.push(0.5 + Math.random() * 2);
 }
 
 const starGeometry = new THREE.BufferGeometry();
@@ -198,33 +299,66 @@ const starMaterial = new THREE.PointsMaterial({
 const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-// 🌌 Dreamy purple nebula clouds
-const nebulaGroup = new THREE.Group();
+// Store the original star brightness
+const originalStarOpacity = 0.85;
 
-function createNebula(x, y, z, scale, color, opacity) {
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
+// 🌌 Soft nebula clouds using blurred radial gradients
 
-    const material = new THREE.MeshBasicMaterial({
-        color: color,
-        transparent: true,
-        opacity: opacity,
-        depthWrite: false
-    });
+function createNebulaTexture() {
+    const canvas = document.createElement("canvas");
 
-    const cloud = new THREE.Mesh(geometry, material);
+    canvas.width = 256;
+    canvas.height = 256;
 
-    cloud.position.set(x, y, z);
-    cloud.scale.set(scale * 1.5, scale, scale * 0.35);
+    const context = canvas.getContext("2d");
 
-    nebulaGroup.add(cloud);
+    const gradient = context.createRadialGradient(
+        128, 128, 0,
+        128, 128, 128
+    );
+
+    gradient.addColorStop(0, "rgba(190, 100, 255, 0.32)");
+    gradient.addColorStop(0.3, "rgba(135, 70, 220, 0.18)");
+    gradient.addColorStop(0.65, "rgba(100, 45, 180, 0.06)");
+    gradient.addColorStop(1, "rgba(70, 30, 120, 0)");
+
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 256);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+
+    return texture;
 }
 
-createNebula(-2.5, 1.2, -4, 1.4, "#8b5cf6", 0.10);
-createNebula(2.4, -0.8, -5, 1.7, "#d946ef", 0.07);
-createNebula(0.2, 2.0, -6, 1.5, "#6366f1", 0.06);
-createNebula(-1.8, -1.5, -5, 1.2, "#c084fc", 0.06);
+const nebulaTexture = createNebulaTexture();
 
-scene.add(nebulaGroup);
+const nebulaSprites = [];
+
+function addNebula(x, y, z, scale, opacity) {
+    const material = new THREE.SpriteMaterial({
+        map: nebulaTexture,
+        transparent: true,
+        opacity: opacity,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+
+    const sprite = new THREE.Sprite(material);
+
+    sprite.position.set(x, y, z);
+    sprite.scale.set(scale * 1.5, scale, 1);
+
+    scene.add(sprite);
+    nebulaSprites.push(sprite);
+}
+
+addNebula(-3.0, 1.2, -5, 4.0, 0.65);
+addNebula(2.8, -1.0, -6, 4.5, 0.55);
+addNebula(0.0, 2.3, -7, 3.8, 0.45);
+addNebula(-1.8, -2.0, -5, 3.5, 0.4);
+
+
 
 // ==========================================
 // 7. CREATE ORBITAL RINGS
@@ -283,6 +417,30 @@ container.addEventListener("pointerleave", () => {
     targetRotationY = 0;
 });
 
+// 💜 Make planets respond to the mouse
+let hoveredPlanet = null;
+
+container.addEventListener("pointermove", (event) => {
+    const rect = renderer.domElement.getBoundingClientRect();
+
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const hits = raycaster.intersectObjects(clickablePlanets);
+
+    hoveredPlanet = hits.length > 0 ? hits[0].object : null;
+
+    renderer.domElement.style.cursor =
+        hoveredPlanet ? "pointer" : "default";
+});
+
+container.addEventListener("pointerleave", () => {
+    hoveredPlanet = null;
+    renderer.domElement.style.cursor = "default";
+});
+
 // ==========================================
 // 9. RESPONSIVE RESIZING
 // ==========================================
@@ -319,7 +477,7 @@ starMaterial.opacity = 0.65 + Math.sin(elapsed * 2) * 0.2;
 // Make a few stars sparkle slightly brighter
 starMaterial.size = 0.035 + Math.sin(elapsed * 3) * 0.008;
 
-nebulaGroup.rotation.y = Math.sin(elapsed * 0.08) * 0.04;
+
 
     // Rotate the main planet
     planet.rotation.y = elapsed * 0.18;
@@ -347,7 +505,18 @@ nebulaGroup.rotation.y = Math.sin(elapsed * 0.08) * 0.04;
 
     planet.rotation.y +=
         (targetRotationY - planet.rotation.y) * 0.025;
+// ✨ Gently enlarge the planet under the mouse
+clickablePlanets.forEach((p) => {
+    const originalScale = originalPlanetScales.get(p);
 
+    const targetScale =
+        hoveredPlanet === p ? 1.12 : 1;
+
+    p.scale.lerp(
+        originalScale.clone().multiplyScalar(targetScale),
+        0.08
+    );
+});
     renderer.render(scene, camera);
 }
 

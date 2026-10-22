@@ -425,3 +425,357 @@ footer {
     }
 }
 
+```css
+/* ========================================
+   ABOUT ME — THE ART OF BECOMING ME
+======================================== */
+
+.about-me {
+    position: relative;
+    padding: 110px 8% 90px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(
+            ellipse at 15% 30%,
+            rgba(153, 91, 202, 0.12),
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 90% 75%,
+            rgba(225, 180, 255, 0.08),
+            transparent 40%
+        ),
+        #100d1b;
+    color: #f6eafa;
+}
+
+/* Decorative glow behind the section */
+
+.about-me::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    top: 12%;
+    left: -180px;
+    border-radius: 50%;
+    background: rgba(172, 112, 255, 0.09);
+    filter: blur(70px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.about-me::after {
+    content: "✧";
+    position: absolute;
+    top: 9%;
+    right: 9%;
+    font-size: 32px;
+    color: #e7c7ff;
+    opacity: 0.75;
+    animation: aboutTwinkle 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Heading */
+
+.about-heading {
+    max-width: 750px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.about-heading .eyebrow {
+    margin-bottom: 22px;
+    color: #d9aefa;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.about-heading h2 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 5.5vw, 68px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+}
+
+.about-heading h2 span {
+    display: block;
+    margin-top: 8px;
+    color: #d9a9f0;
+    font-style: italic;
+}
+
+/* Main introduction card */
+
+.about-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 55px;
+    align-items: center;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 48px;
+    border: 1px solid rgba(225, 194, 255, 0.17);
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.055),
+        rgba(173, 115, 226, 0.035)
+    );
+    box-shadow:
+        0 20px 80px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+}
+
+/* Photo placeholder */
+
+.about-photo {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 370px;
+}
+
+.photo-placeholder {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid rgba(239, 207, 255, 0.35);
+    border-radius: 160px 160px 20px 20px;
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(245, 210, 255, 0.8),
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 70% 70%,
+            rgba(176, 106, 228, 0.6),
+            transparent 40%
+        ),
+        linear-gradient(
+            155deg,
+            #4b2869,
+            #21152f 65%,
+            #100d1b
+        );
+    box-shadow:
+        0 0 55px rgba(187, 123, 255, 0.12),
+        inset 0 0 35px rgba(255, 255, 255, 0.04);
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+.photo-placeholder:hover {
+    transform: translateY(-6px) rotate(-1deg);
+    box-shadow: 0 0 65px rgba(187, 123, 255, 0.2);
+}
+
+.photo-placeholder span {
+    color: #f6dfff;
+    font-family: Georgia, serif;
+    font-size: 65px;
+    animation: aboutHeartbeat 3s ease-in-out infinite;
+}
+
+.photo-placeholder p {
+    margin-top: 14px;
+    color: #f0d9fa;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+/* Introduction text */
+
+.about-content {
+    position: relative;
+    z-index: 1;
+}
+
+.about-greeting {
+    margin-bottom: 12px;
+    color: #d5a2ed;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.about-content h3 {
+    margin: 0 0 22px;
+    color: #f8edff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 5vw, 62px);
+    font-weight: 400;
+    letter-spacing: -1px;
+}
+
+.about-content > p:not(.about-greeting) {
+    margin: 0 0 18px;
+    color: #d7cadd;
+    font-size: 15px;
+    line-height: 1.95;
+    font-weight: 300;
+}
+
+.about-signature {
+    display: inline-block;
+    margin-top: 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(221, 174, 255, 0.45);
+    color: #e1b9f6;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-style: italic;
+}
+
+/* Floating stars */
+
+.about-star {
+    position: absolute;
+    color: #e5c0ff;
+    pointer-events: none;
+}
+
+.star-a {
+    top: 28px;
+    right: 38px;
+    font-size: 25px;
+    animation: aboutTwinkle 3s ease-in-out infinite;
+}
+
+.star-b {
+    bottom: 30px;
+    left: 42%;
+    font-size: 17px;
+    animation: aboutTwinkle 4s ease-in-out infinite reverse;
+}
+
+/* Closing thought */
+
+.about-footer {
+    margin: 55px auto 0;
+    color: #c9a8d9;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.4px;
+}
+
+/* Animations */
+
+@keyframes aboutTwinkle {
+    0%, 100% {
+        opacity: 0.35;
+        transform: scale(0.85) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15) rotate(12deg);
+    }
+}
+
+@keyframes aboutHeartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+    .about-me {
+        padding: 75px 6% 65px;
+    }
+
+    .about-heading {
+        margin-bottom: 35px;
+    }
+
+    .about-heading .eyebrow {
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .about-card {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 28px 22px;
+        border-radius: 20px;
+    }
+
+    .about-photo {
+        min-height: auto;
+    }
+
+    .photo-placeholder {
+        max-width: 240px;
+    }
+
+    .about-content {
+        text-align: center;
+    }
+
+    .about-content h3 {
+        font-size: 45px;
+    }
+
+    .about-content > p:not(.about-greeting) {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .about-signature {
+        margin-top: 18px;
+    }
+
+    .star-a {
+        top: 15px;
+        right: 16px;
+    }
+
+    .star-b {
+        bottom: 15px;
+        left: 12px;
+    }
+
+    .about-footer {
+        margin-top: 35px;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    .about-me *,
+    .about-me *::before,
+    .about-me *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+```
+
