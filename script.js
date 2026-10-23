@@ -36,16 +36,31 @@ quoteBtn.addEventListener("click", () => {
     quote.textContent = quotes[currentQuote];
 });
 
-planet.addEventListener("click", () => {
-    planet.querySelector("span").textContent = "♡";
 
-    planet.style.boxShadow =
-        "inset -20px -15px 35px #15101f, 0 0 90px #e6b8ff";
+// 💌 LETTERS TO MYSELF — Open and close each letter
 
-    setTimeout(() => {
-        planet.querySelector("span").textContent = "me";
+document.querySelectorAll(".letter-card").forEach((card) => {
+const button = card.querySelector(".open-letter");
+const letter = card.querySelector(".letter-content");
 
-        planet.style.boxShadow =
-            "inset -20px -15px 35px #15101f, 0 0 45px #c99de755";
-    }, 1000);
+
+if (!button || !letter) {
+    console.warn("Letter button or content is missing:", card);
+    return;
+}
+
+button.addEventListener("click", () => {
+    const isOpen = card.classList.toggle("is-open");
+
+    letter.style.display = isOpen ? "block" : "none";
+
+    button.textContent = isOpen
+        ? "Close my letter ↑"
+        : "Open my letter ↗";
+
+    button.setAttribute("aria-expanded", String(isOpen));
+});
+
+button.setAttribute("aria-expanded", "false");
+
 });
