@@ -55,10 +55,10 @@ scene.add(planet);
 const dreamPlanet = new THREE.Mesh(
     new THREE.SphereGeometry(0.32, 48, 48),
     new THREE.MeshStandardMaterial({
-        color: "#f3a6e8",
+       color: "#e7b0ff",
         roughness: 0.7,
         emissive: "#63245f",
-        emissiveIntensity: 0.35
+        emissiveIntensity: 0.65
     })
 );
 
@@ -125,7 +125,7 @@ const planetStories = new Map([
         {
             title: "The Art of Becoming Me",
             label: "MY JOURNEY ✧",
-            text: "I am still discovering who I am. Somewhere between who I used to be and who I want to become, I am learning to appreciate the person I am today."
+            text: "I'm 22, and honestly, I'm still figuring out who I am. I have so many dreams, so many things I want to experience, and so many versions of myself I want to meet. Some days I feel like I'm meant to do something extraordinary. Other days, I'm just trying to understand myself. Maybe growing up is learning that I can be both."
         }
     ],
     [
@@ -133,7 +133,7 @@ const planetStories = new Map([
         {
             title: "A Girl Full of Dreams",
             label: "MY LITTLE UNIVERSE ✧",
-            text: "There are so many things I want to do, places I want to see, and versions of myself I want to meet. I hope I never lose the courage to try."
+            text: "There are so many things I want to do that sometimes I don't know where to begin. I want to see the world, create things that make people feel something, tell stories that deserve to be heard, and build a life that feels like mine. I'm 22, and I don't have everything figured out. But somewhere inside me, there's this feeling that life has so much more to offer, and I want to be brave enough to find out. Maybe I don't need to know exactly where I'm going yet. Maybe I just need to keep moving."
         }
     ],
     [
@@ -141,7 +141,8 @@ const planetStories = new Map([
         {
             title: "Things I Never Said",
             label: "LETTERS FROM MY HEART ✧",
-            text: "Some feelings never find their way into conversations. They become poems, unsent letters, and little pieces of ourselves that we leave behind in words."
+            text: "Some feelings are too complicated to explain in a conversation, so I turn them into words. I write about love, heartbreak, the things we lose, the people we become, and the little moments that stay with us long after they're gone. Sometimes I write because my heart is full; sometimes, because it's too heavy. I'm learning that not every feeling needs an answer. Some just need a place to exist, and maybe that's what poetry is for me: a home for everything I don't know how to say."
+
         }
     ]
 ]);
@@ -259,6 +260,8 @@ const moon = new THREE.Mesh(
 );
 
 scene.add(moon);
+
+moon.position.set(1.8, 0, 0);
 
 // ==========================================
 // 6. CREATE STARS
@@ -489,12 +492,18 @@ starMaterial.size = 0.035 + Math.sin(elapsed * 3) * 0.008;
     ring.rotation.z = elapsed * 0.06;
     secondRing.rotation.z = -elapsed * 0.035;
 
-    // Move the moon around the planet
-    moon.position.set(
-        Math.cos(elapsed * 0.55) * 1.85,
-        Math.sin(elapsed * 0.55) * 0.35,
-        Math.sin(elapsed * 0.55) * 0.75
-    );
+    
+// 🌙 Move the moon around the main planet in a wider 3D orbit
+const moonAngle = elapsed * 0.45;
+
+moon.position.set(
+    Math.cos(moonAngle) * 2.25,
+    Math.sin(moonAngle) * 0.85,
+    Math.sin(moonAngle) * 0.65
+);
+
+
+
 
     // Slowly move the stars
     stars.rotation.y = elapsed * 0.008;
