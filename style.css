@@ -777,5 +777,196 @@ footer {
         transition: none !important;
     }
 }
-```
+
+
+/* =================================
+LETTERS TO MYSELF SECTION
+================================= */
+
+.letters-section {
+padding: 100px 8%;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.letters-section h2 {
+font-size: clamp(2rem, 5vw, 3.5rem);
+color: #f3eaff;
+margin: 20px 0;
+font-weight: 500;
+}
+
+.letters-section h2 span {
+color: #d8b4fe;
+font-style: italic;
+}
+
+.letters-intro {
+max-width: 600px;
+margin: 0 auto 55px;
+color: #c9bddb;
+line-height: 1.9;
+font-size: 1rem;
+}
+
+.letters-container {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 25px;
+max-width: 1150px;
+margin: 0 auto;
+align-items: start;
+}
+
+.letter-card {
+position: relative;
+padding: 35px 25px;
+border: 1px solid rgba(220, 190, 255, 0.25);
+border-radius: 24px;
+background: linear-gradient(
+145deg,
+rgba(107, 76, 145, 0.22),
+rgba(35, 23, 55, 0.65)
+);
+box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+transition: transform 0.35s ease, border-color 0.35s ease;
+backdrop-filter: blur(12px);
+}
+
+.letter-card:hover {
+transform: translateY(-8px);
+border-color: rgba(220, 190, 255, 0.7);
+}
+
+.letter-envelope {
+font-size: 2.8rem;
+margin-bottom: 18px;
+transition: transform 0.35s ease;
+}
+
+.letter-card:hover .letter-envelope {
+transform: rotate(-8deg) scale(1.1);
+}
+
+.letter-card h3 {
+color: #f6edff;
+font-size: 1.3rem;
+font-weight: 500;
+margin-bottom: 12px;
+}
+
+.letter-card > p {
+color: #c9bddb;
+line-height: 1.7;
+font-size: 0.9rem;
+min-height: 55px;
+}
+
+.open-letter {
+margin-top: 20px;
+padding: 11px 18px;
+border: 1px solid rgba(220, 190, 255, 0.4);
+border-radius: 30px;
+background: rgba(216, 180, 254, 0.1);
+color: #f3eaff;
+cursor: pointer;
+font: inherit;
+font-size: 0.85rem;
+transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.open-letter:hover {
+background: rgba(216, 180, 254, 0.25);
+transform: scale(1.04);
+}
+
+/* The letter is hidden until its button is clicked. */
+
+.letter-content {
+display: none;
+margin-top: 25px;
+padding-top: 22px;
+border-top: 1px solid rgba(220, 190, 255, 0.2);
+text-align: left;
+color: #e5d9f3;
+line-height: 1.9;
+font-size: 0.95rem;
+}
+
+.letter-content p {
+margin-bottom: 16px;
+}
+
+.letter-content .letter-signature {
+color: #d8b4fe;
+font-style: italic;
+text-align: right;
+margin-top: 22px;
+}
+
+.letter-card.is-open .letter-content {
+display: block;
+animation: letterReveal 0.5s ease both;
+}
+
+.letter-card.is-open .letter-envelope {
+transform: rotate(-10deg) scale(1.08);
+}
+
+.letter-card.is-open .open-letter {
+background: rgba(216, 180, 254, 0.22);
+}
+
+.letters-footer {
+margin-top: 55px;
+color: #c9bddb;
+font-style: italic;
+letter-spacing: 0.5px;
+}
+
+@keyframes letterReveal {
+from {
+opacity: 0;
+transform: translateY(12px);
+}
+
+
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+}
+
+/* Responsive layout for tablets and phones */
+
+@media (max-width: 900px) {
+.letters-container {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+}
+
+@media (max-width: 600px) {
+.letters-section {
+padding: 75px 6%;
+}
+
+
+.letters-container {
+    grid-template-columns: 1fr;
+}
+
+.letter-card {
+    padding: 30px 22px;
+}
+
+.letter-card > p {
+    min-height: 0;
+}
+
+
+
+
 
